@@ -5,7 +5,7 @@
             <tr>
                 <th>Log ID</th>
                 <th>Date Created</th>
-                <th>Source</th>
+                <th>Log Type</th>
             </tr>
         </thead>
         <tbody>
