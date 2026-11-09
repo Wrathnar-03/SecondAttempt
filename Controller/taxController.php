@@ -6,24 +6,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? '';
     
     // inputs
-    $userID      = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
-    $userName    = trim($_POST['user_name'] ?? '');
-    $userType    = trim($_POST['user_type'] ?? '');
-    $allowedType = ['admin', 'security', 'visitor'];
+    $taxID       = filter_input(INPUT_POST, 'tax_id', FILTER_SANITIZE_NUMBER_INT);
+    $taxValue    = ($_POST['tax_value'] ?? '');
+    $taxType     = ($_POST['tax_type'] ?? '');
+    $allowedType = ['motorcycle', 'car', 'bus', 'truck'];
 
     // validation
-    if (empty($userName) || !in_array($userType, $allowedType)) {
+    if (empty($taxValue) || !in_array($taxType, $allowedType)) {
         die("Invalid form data submitted.");
     }
 
     try {
-        if (!$userID) die("User ID required for update.");
-            $sql = "UPDATE UserTB SET user_name = :user_name, user_type = :user_type WHERE user_id = :user_id";
+        if (!$taxID) die("Tax ID required for update.");
+            $sql  = "UPDATE TaxTB SET tax_value = :tax_value, tax_type = :tax_type WHERE tax_id = :tax_id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
-                ':user_id'   => $userID,
-                ':user_name' => $userName,
-                ':user_type' => $userType
+                ':tax_id'    => $taxID,
+                ':tax_value' => $taxValue,
+                ':tax_type'  => $taxType
             ]);
             echo "Record updated successfully!";
     } catch (\PDOException $error) {

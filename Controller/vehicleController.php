@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? '';
     
     // inputs
-    $vehicleID      = filter_input(INPUT_POST, 'vehicle_id', FILTER_SANITIZE_NUMBER_INT);
-    $userID    = trim($_POST['user_id'] ?? '');
-    $vehicleType    = trim($_POST['vehicle_type'] ?? '');
+    $vehicleID   = filter_input(INPUT_POST, 'vehicle_id', FILTER_SANITIZE_NUMBER_INT);
+    $userID      = ($_POST['user_id'] ?? '');
+    $vehicleType = ($_POST['vehicle_type'] ?? '');
     $allowedType = ['motorcycle', 'car', 'bus', 'truck'];
 
     // validation
@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         switch ($action) {
             case 'insert':
-                $sql = "INSERT INTO UserTB (vehicle_id, user_id, vehicle_type) VALUES (:vehicle_id, :user_id, :vehicle_type)";
+                $sql  = "INSERT INTO VehicleTB (vehicle_id, user_id, vehicle_type) VALUES (:vehicle_id, :user_id, :vehicle_type)";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':vehicle_id'   => $vehicleID,
-                    ':user_id' => $userID,
+                    ':user_id'      => $userID,
                     ':vehicle_type' => $vehicleType
                 ]);
                 echo "Record created successfully!";
@@ -31,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             case 'update':
                 if (!$vehicleID) die("User ID required for update.");
-                $sql = "UPDATE UserTB SET user_id = :user_id, vehicle_type = :vehicle_type WHERE vehicle_id = :vehicle_id";
+                $sql  = "UPDATE VehicleTB SET user_id = :user_id, vehicle_type = :vehicle_type WHERE vehicle_id = :vehicle_id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':vehicle_id'   => $vehicleID,
-                    ':user_id' => $userID,
+                    ':user_id'      => $userID,
                     ':vehicle_type' => $vehicleType
                 ]);
                 echo "Record updated successfully!";
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             case 'delete':
                 if (!$vehicleID) die("User ID required for deletion.");
-                $sql = "DELETE FROM UserTB WHERE vehicle_id = :vehicle_id";
+                $sql  = "DELETE FROM VehicleTB WHERE vehicle_id = :vehicle_id";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([
                     ':vehicle_id' => $vehicleID

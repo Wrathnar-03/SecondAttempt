@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // inputs
     $userID      = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
-    $userName    = trim($_POST['user_name'] ?? '');
-    $userType    = trim($_POST['user_type'] ?? '');
+    $userName    = ($_POST['user_name'] ?? '');
+    $userType    = ($_POST['user_type'] ?? '');
     $allowedType = ['admin', 'security', 'visitor'];
 
     // validation
