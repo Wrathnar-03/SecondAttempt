@@ -1,35 +1,67 @@
-<!DOCTYPE html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+function isLoggedIn() {
+    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+}
+
+function getCurrentUserType() {
+    return $_SESSION['user_type'] ?? 'admin';
+}
+
+function requireRole(array $allowedRoles) {
+    $currentUserType = getCurrentUserType();
+
+    if (!in_array($currentUserType, $allowedRoles)) {
+        http_response_code(403);
+        die("Access Denied: You do not have permission to view this page.");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <!--PHP scripts-->
-    <?php
-    $view = $_GET['view'] ?? 'home';
-    $user = $_GET['user'] ?? 'isAdmin';
-
-    switch ($view) {
-        case 'areas':
-            include 'Main/areas.php';
-            break;
-        case 'listings':
-            include 'Main/listings.php';
-            break;
-        case 'logs':
-            include 'Main/logs.php';
-            break;
-        case 'report':
-            include 'Main/report.php';
-            break;
-        case 'values':
-            include 'Main/values.php';
-            break;
-        default:
-            include 'home.php';
-            break;
-    }
-    ?>
+    <link rel="stylesheet" href="../Decor/style.css">
+    <script src="../Decor/script.js"></script>
 </head>
+<body>
+    <header>
+        <?php include "Partials/nav.php"?>
+    </header>
+
+    <main>
+        <?php
+        $view = $_GET['view'] ?? 'home';
+
+        switch ($view) {
+            case 'areas':
+                include 'Main/areas.php';
+                break;
+            case 'listings':
+                include 'Main/listings.php';
+                break;
+            case 'logs':
+                include 'Main/logs.php';
+                break;
+            case 'report':
+                include 'Main/report.php';
+                break;
+            case 'values':
+                include 'Main/values.php';
+                break;
+            default:
+                include 'home.php';
+                break;
+        }
+        ?>
+    </main>
+
+    <footer>
+        <?php include "Partials/footer.php"?>
+    </footer>
+</body>
+</html>

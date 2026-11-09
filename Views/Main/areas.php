@@ -1,5 +1,5 @@
 <main>
-    <div>
+    <div class="display-data">
         <h2>Area Information</h2>
         <table>
             <thead>
