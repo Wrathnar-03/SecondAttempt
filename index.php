@@ -25,12 +25,12 @@ function requireRole(array $allowedRoles) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../Decor/style.css">
-    <script src="../Decor/script.js"></script>
+    <link rel="stylesheet" href="Decor/style.css">
+    <script src="/Decor/script.js"></script>
 </head>
 <body>
     <header>
-        <?php include "Partials/nav.php"?>
+        <?php include "Views/Partials/nav.php"?>
     </header>
 
     <main>
@@ -39,29 +39,29 @@ function requireRole(array $allowedRoles) {
 
         switch ($view) {
             case 'areas':
-                include 'Main/areas.php';
+                include 'Views/Main/areas.php';
                 break;
             case 'listings':
-                include 'Main/listings.php';
+                include 'Views/Main/listings.php';
                 break;
             case 'logs':
-                include 'Main/logs.php';
+                include 'Views/Main/logs.php';
                 break;
             case 'report':
-                include 'Main/report.php';
+                include 'Views/Main/report.php';
                 break;
             case 'values':
-                include 'Main/values.php';
+                include 'Views/Main/values.php';
                 break;
             default:
-                include 'home.php';
+                include 'Views/home.php';
                 break;
         }
         ?>
     </main>
 
     <footer>
-        <?php include "Partials/footer.php"?>
+        <?php include "Views/Partials/footer.php"?>
     </footer>
 </body>
 </html>
